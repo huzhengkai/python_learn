@@ -1,7 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
+from openpyxl import Workbook
 
 
+
+wb = Workbook()
+dest_filename = '大连生活网资源列表.xlsx'
+ws1 = wb.active
+ws1.title = "资源"
 def getHTMLText(url):
     """获取url地址页面内容"""
     headers = {
@@ -14,11 +20,14 @@ def getHTMLText(url):
     return response.text
 
 class Movie(object):
-    def __init__(self, time,category,title,downloadURL):
+    def __init__(self, time,category,title,downloadURL,information):
         self.time = time
         self.category = category
         self.title = title
         self.downloadURL = downloadURL
+        self.information = information
+    def set(self, information):
+        self.information = information
 def getMovieList(htmlText):
     soup = BeautifulSoup(htmlText, 'html.parser')
     a = soup.select("li.tr")
@@ -29,15 +38,51 @@ def getMovieList(htmlText):
         category = i.find_all("a",attrs={"class":"lei"})[0].text
         title = i.find_all("a",attrs={"class":"title"})[0].text
         downloadURL = url + i.find_all("a",attrs={"class":"title"})[0].attrs["href"]
-        movie = Movie(time,category,title,downloadURL)
-        movieList.append(movie)
+        movie = Movie(time,category,title,downloadURL,"")
+        if category!="动漫" and category!="游戏":
+            movieList.append(movie)
 
-    print(movieList)
-
+    return movieList
+def addInformationToMovie(movieList):
+    for movie in movieList:
+        downloadHTMLText = getHTMLText(movie.downloadURL)
+        soup = BeautifulSoup(downloadHTMLText, 'html.parser')
+        lists = soup.select("#contenthtml")
+        if len(lists)!=0:
+            information = lists[0]
+            # print(information)
+            # print("*******************************")
+            movie.set(information.get_text())
+            # print(movie.time+"---"+movie.category+"---"+str(movie.information))
+    return movieList
+#一行代表一个资源
+def movieListSaveToCSV(movieInformationList):
+    for movie in movieInformationList:
+        row = []
+        row.append(movie.time)
+        row.append(movie.category)
+        row.append(movie.title)
+        row.append(movie.downloadURL)
+        row.append(movie.information)
+        ws1.append(row)
+    wb.save(filename=dest_filename)
 
 def main():
-    data = getHTMLText("http://www.dlkoo.com/down/index.asp?page=2")
-    getMovieList(data)
+    data = getHTMLText("http://www.dlkoo.com/down/index.asp?page=1")
+    movieList = getMovieList(data)
+    movieInformationList= addInformationToMovie(movieList)
+    movieListSaveToCSV(movieInformationList)
+
+    # for movie in movieInformationList:
+    #     # print(type(movie.time)+"---"+type(movie.category)+"---"+type(movie.title)+"---"+type(movie.downloadURL)+"---"+type(movie.information)) 这里会报错：TypeError: unsupported operand type(s) for +: 'type' and 'str'
+    #     print(type(movie.time))
+    #     print(type(movie.category))
+    #     print(type(movie.title))
+    #     print(type(movie.downloadURL))
+    #     print(type(movie.information))
+    #     print("***************************")
+
+
 main()
 
 
