@@ -32,7 +32,7 @@ def getMovieList(htmlText):
         movie = Movie(time,category,title,downloadURL)
         movieList.append(movie)
 
-
+    print(movieList)
 
 
 def main():
