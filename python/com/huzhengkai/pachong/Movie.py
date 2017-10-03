@@ -6,6 +6,7 @@ from openpyxl import Workbook
 
 wb = Workbook()
 dest_filename = '大连生活网资源列表.xlsx'
+#获取工作表
 ws1 = wb.active
 ws1.title = "资源"
 def getHTMLText(url):
@@ -67,11 +68,29 @@ def movieListSaveToCSV(movieInformationList):
         ws1.append(row)
     wb.save(filename=dest_filename)
 
+#n代表我们想要遍历的页数,n为10，遍历1-9页。
+def generateURL(n):
+    urlList=[]
+    url = "http://www.dlkoo.com/down/index.asp?code=1&page="
+    i = 1
+    while i:
+        if i ==n:
+            break
+        url1=url+str(i)
+        urlList.append(url1)
+        i=i+1
+    return urlList
+
 def main():
-    data = getHTMLText("http://www.dlkoo.com/down/index.asp?page=1")
-    movieList = getMovieList(data)
-    movieInformationList= addInformationToMovie(movieList)
-    movieListSaveToCSV(movieInformationList)
+    urlList = generateURL(3)
+    allMovie = []
+    for url in urlList:
+        data = getHTMLText(url)
+        movieList = getMovieList(data)
+        movieInformationList= addInformationToMovie(movieList)
+        allMovie.extend(movieInformationList)
+
+    movieListSaveToCSV(allMovie)
 
     # for movie in movieInformationList:
     #     # print(type(movie.time)+"---"+type(movie.category)+"---"+type(movie.title)+"---"+type(movie.downloadURL)+"---"+type(movie.information)) 这里会报错：TypeError: unsupported operand type(s) for +: 'type' and 'str'
