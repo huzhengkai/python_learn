@@ -82,7 +82,7 @@ def generateURL(n):
     return urlList
 
 def main():
-    urlList = generateURL(3)
+    urlList = generateURL(4)
     allMovie = []
     for url in urlList:
         data = getHTMLText(url)
