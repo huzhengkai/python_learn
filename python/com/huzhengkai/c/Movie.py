@@ -25,19 +25,22 @@ def getMovieList(htmlText):
     url = "http://www.dlkoo.com"
     movieList=[]
     for i in a:
+        #find_all返回的是一个list，所以我们需要[0]
         time = i.find_all("span",attrs={"class":"addt"})[0].text
         category = i.find_all("a",attrs={"class":"lei"})[0].text
         title = i.find_all("a",attrs={"class":"title"})[0].text
         downloadURL = url + i.find_all("a",attrs={"class":"title"})[0].attrs["href"]
         movie = Movie(time,category,title,downloadURL)
         movieList.append(movie)
-
+        # print(i)
+    return movieList
 
 
 
 def main():
     data = getHTMLText("http://www.dlkoo.com/down/index.asp?page=2")
-    getMovieList(data)
+    movieList = getMovieList(data)
+    print(movieList.__len__())
 main()
 
 
