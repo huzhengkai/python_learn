@@ -1,6 +1,7 @@
 import os
 os.chdir('F:\\HeadFirstPython\\chapter3')
 print(os.getcwd())
+os.getcwd()
 man = []
 other = []
 try:
