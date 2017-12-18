@@ -21,7 +21,7 @@ areas = ["jinjiang","qingyang","wuhou","gaoxin7","chenghua","jinniu","tianfuxinq
 
 #当页数超过最大页数时，并不会报错，而是显示最后一页
 #现在的问题是，如何获取最大页数
-#先怕取https://cd.lianjia.com/ershoufang/jinjiang/，获取二手房的数量，除以30取整，就是最大页数
+#先爬取https://cd.lianjia.com/ershoufang/jinjiang/，获取二手房的数量，除以30取整，就是最大页数
 for i in areas:
     url = 'https://cd.lianjia.com/ershoufang/%s/' %i
     res = getHTMLText(url)
@@ -55,7 +55,7 @@ file = open('lianjia.csv','w',encoding = 'utf-8')
 for url in house_urls:
     res = getHTMLText(url)
     soup = BeautifulSoup(res, 'html.parser')
-    time.sleep(1)
+    #time.sleep(1)
     aa = soup.find_all("a",attrs={"class":"info ","target":"_blank"})
     if len(aa)!= 0 :
         xiaoqumingcheng = aa[0].get_text()
@@ -66,49 +66,57 @@ for url in house_urls:
     try:
         fangwuhuxing = base_info[0].get_text().replace("房屋户型","")
     except IndexError  as e:
-        print("fangwuhuxing发生了异常"+e)
+        print("fangwuhuxing发生了异常")
+        print(base_info)
         fangwuhuxing = ""
 
     try:
         louceng = base_info[1].get_text().replace("所在楼层","")
     except IndexError  as e:
-        print("louceng发生了异常"+e)
+        print("louceng发生了异常")
+        print(base_info)
         louceng = ""
 
     try:
         mianji = base_info[2].get_text().replace("建筑面积","")
     except IndexError as e:
-        print("mianji发生了异常"+e)
+        print("mianji发生了异常")
+        print(base_info)
         mianji = ""
 
     try:
         chaoxiang = base_info[6].get_text().replace("房屋朝向","")
     except IndexError as e:
-        print("chaoxiang发生了异常"+e)
+        print("chaoxiang发生了异常")
+        print(base_info)
         chaoxiang = ""
 
     try:
         quyu = soup.find_all("a",attrs={"href":"/ershoufang/jinjiang/","target":"_blank"})[0].get_text()
     except IndexError as e:
-        print("quyu发生了异常"+e)
+        print("quyu发生了异常")
+        print(base_info)
         quyu = ""
 
     try:
         price = soup.find_all("span",attrs={"class":"total"})[0].get_text()+"万"
     except IndexError as e:
-        print("price发生了异常"+e)
+        print("price发生了异常")
+        print(base_info)
         price = ""
 
     try:
         danjia = soup.find_all("span",attrs={"class":"unitPriceValue"})[0].get_text()
     except IndexError as e:
-        print("danjia发生了异常"+e)
+        print("danjia发生了异常")
+        print(base_info)
         danjia = ""
 
     try:
         jianzhushijian = soup.find_all("div",attrs={"class":"subInfo"})[2].get_text()[0:5]
     except IndexError as e:
-        print("danjia发生了异常"+e)
+        print("danjia发生了异常")
+        print(base_info)
         jianzhushijian = ""
 
 

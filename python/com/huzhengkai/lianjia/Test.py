@@ -2,6 +2,8 @@ import math
 import requests
 from bs4 import BeautifulSoup
 
+
+
 def getHTMLText(url):
     """获取url地址页面内容"""
     headers = {
