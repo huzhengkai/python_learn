@@ -24,7 +24,7 @@ areas = ["jinjiang","qingyang","wuhou","gaoxin7","chenghua","jinniu","tianfuxinq
 #现在的问题是，如何获取最大页数
 #先爬取https://cd.lianjia.com/ershoufang/jinjiang/，获取二手房的数量，除以30取整，就是最大页数
 for i in areas:
-    #根据取名称创建csv文件
+    #根据区名称创建csv文件
     file = open(i,'w',encoding = 'utf-8')
     url = 'https://cd.lianjia.com/ershoufang/%s/' %i
     res = getHTMLText(url)
