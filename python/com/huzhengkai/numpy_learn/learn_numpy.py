@@ -21,3 +21,19 @@ print(e)
 aa = e.shape[0]
 print(aa)
 
+print("-------------")
+
+returnMat = array([[1,2,3],[4,5,6],[7,8,9]])
+print(returnMat)
+#获取第一行
+print(returnMat[0])
+#获取第一行
+print(returnMat[0,:])
+#获取第一列
+print(returnMat[:,0])
+
+print("-----------")
+
+print(returnMat.max(0))
+
+
