@@ -2,7 +2,7 @@
 from numpy import *
 import operator
 
-
+#使用的欧氏距离，也可以使用其他距离
 def classify0(inX, dataSet, labels, k):
     dataSetSize = dataSet.shape[0]
     diffMat = tile(inX, (dataSetSize,1)) - dataSet
@@ -64,9 +64,6 @@ def datingClassTest():
     print("the total error rate is: %f" % (errorCount/float(numTestVecs)))
     print(errorCount)
 
-print("------------------")
-datingClassTest()
-
 def classifyPerson():
     resultList = ['not at all','in small doses','in large doses']         #可能输出的结果
     percentTats = float(input("percentage of time spent playing video games?")) #输入看电影的时间
@@ -74,6 +71,9 @@ def classifyPerson():
     iceCream = float(input("liters of ice cream consumed per year?")) #吃冰淇淋公升数
     datingDataMat,datingLabels = file2matrix('datingTestSet2.txt')        #读取样本
     normMat,ranges,minVals = autoNorm(datingDataMat)                      #归一化
-    inArr = array([ffMiles,percentTats,iceCream])                         #输入样本
+    inArr = array([ffMiles,percentTats,iceCream])                       #输入样本
+    #我们同样需要对输入样本进行归一化的处理
     classifierResult = classify0((inArr-minVals)/ranges,normMat,datingLabels,3)
     print("You will probably like this person: ",resultList[classifierResult -1]) #数据标签是1,2,3，因此要减1
+
+classifyPerson()

@@ -28,3 +28,106 @@ print(h)
 
 for i in range(3):
     print(i)
+
+dataSet = [[1, 1, 'yes'],
+           [1, 1, 'yes'],
+           [1, 0, 'no'],
+           [0, 1, 'no'],
+           [0, 1, 'no']]
+num = len(dataSet[0])
+print(num)
+for i in range(num):
+    featList = [example[i] for example in dataSet]
+    print(featList)
+    uniqueVals = set(featList)
+    print(uniqueVals)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

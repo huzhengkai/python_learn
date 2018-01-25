@@ -23,7 +23,12 @@ print(aa)
 
 print("-------------")
 
-returnMat = array([[1,2,3],[4,5,6],[7,8,9]])
+returnMat = array([[1,2,3],[4,5,6]])
+for i in returnMat:
+    print(i)
+a = len(returnMat)
+print(a)
+
 print(returnMat)
 #获取第一行
 print(returnMat[0])
